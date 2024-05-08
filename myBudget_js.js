@@ -1,17 +1,40 @@
-let incomeArray = localStorage.getItem(income-array)
-let expensesArray = localStorage.getItem(expenses-array);
-localStorageValidation()
+let incomeArray = localStorage.getItem("income-array");
+let expensesArray = localStorage.getItem("expenses-array");
+localStorageValidation();
 
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
 
+function convertArrays(array) {
+  array = JSON.parse(incomeArray);
+}
+function addItemAction() {
+  const elementSelect = document.querySelector("select").value;
+  const elementDescription = document.querySelector(".description").value;
+  const elementValue = parseInt(document.querySelector(".value").value);
+
+  switch (elementSelect) {
+    case "plus":
+      addIncomeItem(incomeArray, elementDescription, elementValue);
+      updateBalanceSection();
+      break;
+
+    default:
+      break;
+  }
+}
+
 function localStorageValidation() {
   if (incomeArray == undefined) {
     incomeArray = [];
+  } else {
+    convertArrays(incomeArray);
   }
 
   if (expensesArray == undefined) {
     expensesArray = [];
+  } else {
+    convertArrays(expensesArray);
   }
 }
 
@@ -21,46 +44,57 @@ function loclStorgeUpdate() {
 }
 
 function addIncomeItem(incomeArray, description, value) {
-  const incomeObject = { description: description, value: value };
+  const incomeObject = { "description": description, "value": value };
+
   incomeArray.push(incomeObject);
-  elememtIncomeList.innerElement += `<li class="list-item">
+  loclStorgeUpdate();
+  const itemIndex = incomeArray.length;
+  elememtIncomeList.innerHTML += `<li class="list-item" value = "${itemIndex}">
         <span class="item-name">${description}</span>
         <span class="item-value">${value}</span>
-        <button class = "remove-button">X</button>
+        <button onclick="removeItem(this.parentNode,${incomeArray})" class = "remove-button">X</button>
         </li>`;
 }
 function addExpensesItem(expensesArray, description, value) {
   const expensesObject = { description: description, value: value };
   expensesArray.push(expensesObject);
-  elementExpensesList.innerElement += `<li class="list-item">
+  loclStorgeUpdate();
+  const itemIndex = expensesArray.length;
+  elementExpensesList.innerHTML += `<li class="list-item" value = "${itemIndex}">
         <span class="item-name">${description}</span>
         <span class="item-value">${value}</span>
-        <button class = "remove-button">X</button>
+        <button onclick="removeItem(this.parentNode,${expensesArray})" class = "remove-button">X</button>
         </li>`;
 }
 
-function updateBalance() {}
-=======
+function removeItem(item, array) {
+  const liIndex = item.value;
+  array.splice(liIndex, 1);
+  loclStorgeUpdate();
+  item.remove();
 }
 
+function updateBalanceSection() {
+  let incomeSum = computeArraySum(incomeArray);
+  let expensesSum = computeArraySum(expensesArray);
 
+  document.querySelector(
+    ".sum-container.income .value"
+  ).textContent = `+ $ ${incomeSum}`;
 
-function updateBalanceSection(){
-    let incomeSum = computeArraySum(incomeArray)
-    let expensesSum = computeArraySum(expensesArray)
+  document.querySelector(
+    ".sum-container.expenses .value"
+  ).textContent = `- $ ${expensesSum}`;
 
-    document.querySelector(".sum-container.income .value").textContent = `+ $ ${incomeSum}`
-
-    document.querySelector(".sum-container.income .value").textContent = `+ $ ${expensesSum}` 
-    
-    document.querySelector(".total-sum").textContent = `$ ${incomeSum - expensesSum}`;
+  document.querySelector(".total-sum").textContent = `$ ${
+    incomeSum - expensesSum
+  }`;
 }
 
-
-function computeArraySum(array){
-    let sum = 0;
-    for (let obj of array){
-        sum += obj.value
-    }
-    return sum;
+function computeArraySum(array) {
+  let sum = 0;
+  for (let obj of array) {
+    sum += obj.value;
+  }
+  return sum;
 }
