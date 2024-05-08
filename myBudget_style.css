@@ -98,13 +98,14 @@ input {
 .list-header {
   border-bottom: solid lightgray 1px;
   padding-bottom: 10px;
+  font-weight: 100;
 }
 
 .details-list {
   width: 250px;
 }
 
-.items-list {
+.list-item {
   border-bottom: solid lightgray 1px;
   padding-block: 15px;
   padding-inline: 8px;
@@ -121,5 +122,3 @@ input {
   padding: 4px;
   font-weight: 500;
 }
-
-.balan;
