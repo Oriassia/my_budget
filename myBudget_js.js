@@ -1,43 +1,56 @@
-let incomeArray = getIncomeArray()
-let expensesArray = getExpensesArray()
+let incomeArray = getIncomeArray();
+let expensesArray = getExpensesArray();
 
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
 
 function getIncomeArray() {
-    let stringIncomeArray = localStorage.getItem("income-array");
+  let stringIncomeArray = localStorage.getItem("income-array");
 
-    if(stringIncomeArray){
-        return JSON.parse(stringIncomeArray);
-    }
-    return [];
+  if (stringIncomeArray) {
+    return JSON.parse(stringIncomeArray);
+  }
+  return [];
 }
 
 function getExpensesArray() {
-    let stringExpensesArray = localStorage.getItem("expenses-array");
+  let stringExpensesArray = localStorage.getItem("expenses-array");
 
-    if(stringExpensesArray){
-        return JSON.parse(stringExpensesArray);
-    }
-    return [];
+  if (stringExpensesArray) {
+    return JSON.parse(stringExpensesArray);
+  }
+  return [];
 }
 
 function addItemAction() {
   const elementSelect = document.querySelector("select").value;
   const elementDescription = document.querySelector(".description").value;
-  const elementValue = parseInt(document.querySelector(".value").value);
-
+  const elementValue = document.querySelector("input.value").valueAsNumber;
   switch (elementSelect) {
     case "plus":
       addIncomeItem(incomeArray, elementDescription, elementValue);
-      updateBalanceSection();
-      break;
 
+      break;
+    case "minus":
+      addExpensesItem(expensesArray, elementDescription, elementValue);
     default:
       break;
   }
 }
 
+function localStorageValidation() {
+  if (incomeArray == undefined) {
+    incomeArray = [];
+  } else {
+    convertArrays(incomeArray);
+  }
+
+  if (expensesArray == undefined) {
+    expensesArray = [];
+  } else {
+    convertArrays(expensesArray);
+  }
+}
 
 function loclStorgeUpdate() {
   localStorage.setItem("income-array", JSON.stringify(incomeArray));
@@ -45,7 +58,7 @@ function loclStorgeUpdate() {
 }
 
 function addIncomeItem(incomeArray, description, value) {
-  const incomeObject = { "description": description, "value": value };
+  const incomeObject = { description: description, value: value };
 
   incomeArray.push(incomeObject);
   loclStorgeUpdate();
@@ -99,3 +112,4 @@ function computeArraySum(array) {
   }
   return sum;
 }
+localStorage.clear();
