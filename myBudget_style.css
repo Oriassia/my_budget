@@ -23,6 +23,8 @@ body {
   padding-bottom: 18px;
   padding-top: 25px;
   background-image: url(/bg-img.jpg);
+  background-repeat:no-repeat ;
+  background-size: cover;
 }
 
 .total-sum {
@@ -122,4 +124,4 @@ input {
   font-weight: 500;
 }
 
-.balan;
+
