@@ -29,29 +29,31 @@
 
       <div class="input-section">
         <form class="drop-down-menu">
-          <select id="country" name="country">
+          <select id="drop-down-select">
             <option value="plus">+</option>
             <option value="minus">-</option>
           </select>
         </form>
         <input type="text" placeholder="Description" />
         <input type="number" placeholder="Value" />
-        <button class="submit-button">&#10003;</button>
+        <button class="submit-button" onclick="updateBalance()">
+          &#10003;
+        </button>
       </div>
 
       <div class="details-section">
         <div class="details-list">
           <h3 class="list-header" style="color: #38b2ad">INCOME</h3>
           <ul class="income-items">
-            <li class="items-list">
+            <li class="list-item">
               <span class="item-name">Item 1</span>
               <span class="item-value">$1000</span>
             </li>
-            <li class="items-list">
+            <li class="list-item">
               <span class="item-name">Item 2</span>
               <span class="item-value">$1000</span>
             </li>
-            <li class="items-list">
+            <li class="list-item">
               <span class="item-name">Item 3</span>
               <span class="item-value">$1000</span>
             </li>
@@ -60,15 +62,15 @@
         <div class="details-list">
           <h3 class="list-header" style="color: #f83d41">EXPENSES</h3>
           <ul class="expenses-items">
-            <li class="items-list">
+            <li class="list-item">
               <span class="item-name">Item 1</span>
               <span class="item-value">$1000</span>
             </li>
-            <li class="items-list">
+            <li class="list-item">
               <span class="item-name">Item 2</span>
               <span class="item-value">$1000</span>
             </li>
-            <li class="items-list">
+            <li class="list-item">
               <span class="item-name">Item 3</span>
               <span class="item-value">$1000</span>
             </li>
@@ -76,5 +78,6 @@
         </div>
       </div>
     </div>
+    <script src="myBudget_js.js"></script>
   </body>
 </html>
