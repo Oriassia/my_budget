@@ -1,13 +1,27 @@
-let incomeArray = localStorage.getItem("income-array");
-let expensesArray = localStorage.getItem("expenses-array");
-localStorageValidation();
+let incomeArray = getIncomeArray()
+let expensesArray = getExpensesArray()
 
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
 
-function convertArrays(array) {
-  array = JSON.parse(incomeArray);
+function getIncomeArray() {
+    let stringIncomeArray = localStorage.getItem("income-array");
+
+    if(stringIncomeArray){
+        return JSON.parse(stringIncomeArray);
+    }
+    return [];
 }
+
+function getExpensesArray() {
+    let stringExpensesArray = localStorage.getItem("expenses-array");
+
+    if(stringExpensesArray){
+        return JSON.parse(stringExpensesArray);
+    }
+    return [];
+}
+
 function addItemAction() {
   const elementSelect = document.querySelector("select").value;
   const elementDescription = document.querySelector(".description").value;
@@ -24,19 +38,6 @@ function addItemAction() {
   }
 }
 
-function localStorageValidation() {
-  if (incomeArray == undefined) {
-    incomeArray = [];
-  } else {
-    convertArrays(incomeArray);
-  }
-
-  if (expensesArray == undefined) {
-    expensesArray = [];
-  } else {
-    convertArrays(expensesArray);
-  }
-}
 
 function loclStorgeUpdate() {
   localStorage.setItem("income-array", JSON.stringify(incomeArray));
