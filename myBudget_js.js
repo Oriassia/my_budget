@@ -33,8 +33,17 @@ function loadArray() {
             </li>`;
             }
     }
-  }
 
+    if(expensesArray.length > 0){
+        for (let index in expensesArray) {
+            elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
+            <span class="item-name">${expensesArray[index].description}</span>
+            <span class="item-value">${expensesArray[index].value}</span>
+            <button onclick="removeItem(this.parentNode,${expensesArray})" class = "remove-button">X</button>
+            </li>`;
+            }
+    }
+}
 
 function addItemAction() {
   const elementSelect = document.querySelector("select").value;
