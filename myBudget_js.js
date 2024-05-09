@@ -39,7 +39,7 @@ function addIncomeItem(incomeArray, description, value) {
   elememtIncomeList.innerHTML += `<li class="list-item" value = "${incomeObject.index}">
         <span class="item-name">${description}</span>
         <div class = "remove-container" > <span class="item-value add-green">+ ${value}</span>
-        <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
+        <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
         </li>`;
 }
 
