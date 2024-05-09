@@ -4,112 +4,75 @@ let expensesArray = getExpensesArray();
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
 loadArray();
-
-function getIncomeArray() {
-  let stringIncomeArray = localStorage.getItem("income-array");
-
-  if (stringIncomeArray) {
-    return JSON.parse(stringIncomeArray);
-  }
-  return [];
-}
-
-function getExpensesArray() {
-  let stringExpensesArray = localStorage.getItem("expenses-array");
-
-  if (stringExpensesArray) {
-    return JSON.parse(stringExpensesArray);
-  }
-  return [];
-}
-
-function loadArray() {
-    if(incomeArray.length > 0){
-        for (let index in incomeArray) {
-            elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
-            <span class="item-name">${incomeArray[index].description}</span>
-            <span class="item-value">${incomeArray[index].value}</span>
-            <button onclick="removeItem(this.parentNode,${incomeArray})" class = "remove-button">X</button>
-            </li>`;
-            }
-    }
-
-    if(expensesArray.length > 0){
-        for (let index in expensesArray) {
-            elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
-            <span class="item-name">${expensesArray[index].description}</span>
-            <span class="item-value">${expensesArray[index].value}</span>
-            <button onclick="removeItem(this.parentNode,${expensesArray})" class = "remove-button">X</button>
-            </li>`;
-            }
-    }
-}
-
 function addItemAction() {
   const elementSelect = document.querySelector("select").value;
   const elementDescription = document.querySelector(".description").value;
   const elementValue = document.querySelector("input.value").valueAsNumber;
-  switch (elementSelect) {
-    case "plus":
-      addIncomeItem(incomeArray, elementDescription, elementValue);
-      break;
-    case "minus":
-      addExpensesItem(expensesArray, elementDescription, elementValue);
-    default:
-      break;
+  if (
+    elementDescription != "" &&
+    document.querySelector("input.value").value != ""
+  ) {
+    switch (elementSelect) {
+      case "plus":
+        addIncomeItem(incomeArray, elementDescription, elementValue);
+
+        break;
+      case "minus":
+        addExpensesItem(expensesArray, elementDescription, elementValue);
+      default:
+        break;
+    }
+    updateBalanceSection();
   }
+  inputReset();
 }
-
-function localStorageValidation() {
-  if (incomeArray == undefined) {
-    incomeArray = [];
-  } else {
-    convertArrays(incomeArray);
-  }
-
-  if (expensesArray == undefined) {
-    expensesArray = [];
-  } else {
-    convertArrays(expensesArray);
-  }
-
-  
-}
-
-function loclStorgeUpdate() {
-  localStorage.setItem("income-array", JSON.stringify(incomeArray));
-  localStorage.setItem("expenses-array", JSON.stringify(expensesArray));
-}
-
 function addIncomeItem(incomeArray, description, value) {
-  const incomeObject = { description: description, value: value };
+  const incomeObject = {
+    description: description,
+    value: value,
+    index: incomeArray.length,
+  };
 
   incomeArray.push(incomeObject);
   loclStorgeUpdate();
-  const itemIndex = incomeArray.length;
-  elememtIncomeList.innerHTML += `<li class="list-item" value = "${itemIndex}">
+
+  elememtIncomeList.innerHTML += `<li class="list-item" value = "${incomeObject.index}">
         <span class="item-name">${description}</span>
         <span class="item-value">${value}</span>
-        <button onclick="removeItem(this.parentNode,${incomeArray})" class = "remove-button">X</button>
-        </li>`;
-}
-function addExpensesItem(expensesArray, description, value) {
-  const expensesObject = { description: description, value: value };
-  expensesArray.push(expensesObject);
-  loclStorgeUpdate();
-  const itemIndex = expensesArray.length;
-  elementExpensesList.innerHTML += `<li class="list-item" value = "${itemIndex}">
-        <span class="item-name">${description}</span>
-        <span class="item-value">${value}</span>
-        <button onclick="removeItem(this.parentNode,${expensesArray})" class = "remove-button">X</button>
+        <button onclick="removeIncomeItem(this.parentNode)" class = "remove-button">X</button>
         </li>`;
 }
 
-function removeItem(item, array) {
+function addExpensesItem(expensesArray, description, value) {
+  const expensesObject = {
+    description: description,
+    value: value,
+    index: expensesArray.length,
+  };
+  expensesArray.push(expensesObject);
+  loclStorgeUpdate();
+
+  elementExpensesList.innerHTML += `<li class="list-item" value = "${expensesObject.index}">
+        <span class="item-name">${description}</span>
+        <span class="item-value">${value}</span>
+        <button onclick="removeExpensesItem(this.parentNode)" class = "remove-button">X</button>
+        </li>`;
+}
+
+function removeIncomeItem(item) {
   const liIndex = item.value;
-  array.splice(liIndex, 1);
+
+  incomeArray.splice(liIndex, 1);
   loclStorgeUpdate();
   item.remove();
+  updateBalanceSection();
+}
+function removeExpensesItem(item) {
+  const liIndex = item.value;
+  expensesArray.splice(liIndex, 1);
+  loclStorgeUpdate();
+  item.remove();
+  updateBalanceSection();
 }
 
 function updateBalanceSection() {
@@ -135,4 +98,68 @@ function computeArraySum(array) {
     sum += obj.value;
   }
   return sum;
+}
+
+function getIncomeArray() {
+  let stringIncomeArray = localStorage.getItem("income-array");
+
+  if (stringIncomeArray) {
+    return JSON.parse(stringIncomeArray);
+  }
+  return [];
+}
+
+function getExpensesArray() {
+  let stringExpensesArray = localStorage.getItem("expenses-array");
+
+  if (stringExpensesArray) {
+    return JSON.parse(stringExpensesArray);
+  }
+  return [];
+}
+
+function loadArray() {
+  if (incomeArray.length > 0) {
+    for (let index in incomeArray) {
+      elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
+            <span class="item-name">${incomeArray[index].description}</span>
+            <span class="item-value">${incomeArray[index].value}</span>
+            <button onclick="removeIncomeItem(this.parentNode)" class = "remove-button">X</button>
+            </li>`;
+    }
+  }
+
+  if (expensesArray.length > 0) {
+    for (let index in expensesArray) {
+      elementExpensesList.innerHTML += `<li class="list-item" value = "${index}">
+            <span class="item-name">${expensesArray[index].description}</span>
+            <span class="item-value">${expensesArray[index].value}</span>
+            <button onclick="removeExpensesItem(this.parentNode)" class = "remove-button">X</button>
+            </li>`;
+    }
+  }
+  updateBalanceSection();
+}
+function inputReset() {
+  document.querySelector(".description").value = "";
+  document.querySelector("input.value").value = "";
+}
+
+function localStorageValidation() {
+  if (incomeArray == undefined) {
+    incomeArray = [];
+  } else {
+    convertArrays(incomeArray);
+  }
+
+  if (expensesArray == undefined) {
+    expensesArray = [];
+  } else {
+    convertArrays(expensesArray);
+  }
+}
+
+function loclStorgeUpdate() {
+  localStorage.setItem("income-array", JSON.stringify(incomeArray));
+  localStorage.setItem("expenses-array", JSON.stringify(expensesArray));
 }
