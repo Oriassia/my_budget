@@ -3,6 +3,7 @@ let expensesArray = getExpensesArray();
 
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
+loadArray();
 
 function getIncomeArray() {
   let stringIncomeArray = localStorage.getItem("income-array");
@@ -22,6 +23,19 @@ function getExpensesArray() {
   return [];
 }
 
+function loadArray() {
+    if(incomeArray.length > 0){
+        for (let index in incomeArray) {
+            elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
+            <span class="item-name">${incomeArray[index].description}</span>
+            <span class="item-value">${incomeArray[index].value}</span>
+            <button onclick="removeItem(this.parentNode,${incomeArray})" class = "remove-button">X</button>
+            </li>`;
+            }
+    }
+  }
+
+
 function addItemAction() {
   const elementSelect = document.querySelector("select").value;
   const elementDescription = document.querySelector(".description").value;
@@ -36,7 +50,22 @@ function addItemAction() {
     default:
       break;
   }
-  updateBalanceSection();
+}
+
+function localStorageValidation() {
+  if (incomeArray == undefined) {
+    incomeArray = [];
+  } else {
+    convertArrays(incomeArray);
+  }
+
+  if (expensesArray == undefined) {
+    expensesArray = [];
+  } else {
+    convertArrays(expensesArray);
+  }
+
+  
 }
 
 function loclStorgeUpdate() {
@@ -99,4 +128,3 @@ function computeArraySum(array) {
   }
   return sum;
 }
-localStorage.clear();
