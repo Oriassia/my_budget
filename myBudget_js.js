@@ -4,21 +4,57 @@ let expensesArray = getExpensesArray();
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
 loadArray();
+colorChange();
+function colorChange() {
+  let submitButtonElem = document.querySelector("i.submit-button");
+  let descriptionElem = document.querySelector("input.description");
+  let valueElem = document.querySelector("input.value");
+
+  //get the select value
+  symbol = document.querySelector("select").value;
+
+  //set a variable with name of the class to add >> outline color
+  const colorClass = symbol === "plus" ? "add-border-green" : "add-border-red";
+
+  // remove both classes from the elements
+  descriptionElem.classList.remove("add-border-red", "add-border-green");
+  valueElem.classList.remove("add-border-red", "add-border-green");
+  // add class to the elements
+  descriptionElem.classList.add(colorClass);
+  valueElem.classList.add(colorClass);
+
+  //set a variable with name of the class to add >> font  color
+  const checkMarkcolorClass = symbol === "plus" ? "add-green" : "add-red";
+  submitButtonElem.classList.remove("add-red", "add-green");
+  submitButtonElem.classList.add(checkMarkcolorClass);
+}
+
 function addItemAction() {
   const elementSelect = document.querySelector("select").value;
   const elementDescription = document.querySelector(".description").value;
   const elementValue = document.querySelector("input.value").valueAsNumber;
+  const pressedTime = new Date().getTime();
   if (
     elementDescription != "" &&
     document.querySelector("input.value").value != ""
   ) {
     switch (elementSelect) {
       case "plus":
-        addIncomeItem(incomeArray, elementDescription, elementValue);
+        addIncomeItem(
+          incomeArray,
+          elementDescription,
+          elementValue,
+          pressedTime
+        );
 
         break;
       case "minus":
-        addExpensesItem(expensesArray, elementDescription, elementValue);
+        addExpensesItem(
+          expensesArray,
+          elementDescription,
+          elementValue,
+          pressedTime
+        );
       default:
         break;
     }
@@ -26,33 +62,34 @@ function addItemAction() {
   }
   inputReset();
 }
-function addIncomeItem(incomeArray, description, value) {
+
+function addIncomeItem(incomeArray, description, value, pressedTime) {
   const incomeObject = {
     description: description,
     value: value,
-    index: incomeArray.length,
+    time: pressedTime,
   };
 
   incomeArray.push(incomeObject);
   loclStorgeUpdate();
 
-  elememtIncomeList.innerHTML += `<li class="list-item" value = "${incomeObject.index}">
+  elememtIncomeList.innerHTML += `<li class="list-item" id = "${pressedTime}">
         <span class="item-name">${description}</span>
         <div class = "remove-container" > <span class="item-value add-green">+ ${value}</span>
-        <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
+        <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
         </li>`;
 }
 
-function addExpensesItem(expensesArray, description, value) {
+function addExpensesItem(expensesArray, description, value, pressedTime) {
   const expensesObject = {
     description: description,
     value: value,
-    index: expensesArray.length,
+    time: pressedTime,
   };
   expensesArray.push(expensesObject);
   loclStorgeUpdate();
 
-  elementExpensesList.innerHTML += `<li class="list-item" value = "${expensesObject.index}">
+  elementExpensesList.innerHTML += `<li class="list-item" id = "${pressedTime}">
         <span class="item-name">${description}</span>
        <div class = "remove-container" > <span class="item-value add-red">- ${value}</span>
         <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i>
@@ -60,16 +97,27 @@ function addExpensesItem(expensesArray, description, value) {
 }
 
 function removeIncomeItem(item) {
-  const liIndex = item.value;
+  const itemTime = item.id;
 
-  incomeArray.splice(liIndex, 1);
+  for (let index in incomeArray) {
+    if (itemTime == incomeArray[index].time) {
+      incomeArray.splice(index, 1);
+      break;
+    }
+  }
   loclStorgeUpdate();
   item.remove();
   updateBalanceSection();
 }
 function removeExpensesItem(item) {
-  const liIndex = item.value;
-  expensesArray.splice(liIndex, 1);
+  const itemTime = item.id;
+
+  for (let index in expensesArray) {
+    if (itemTime == expensesArray[index].time) {
+      expensesArray.splice(index, 1);
+      break;
+    }
+  }
   loclStorgeUpdate();
   item.remove();
   updateBalanceSection();
@@ -163,4 +211,3 @@ function loclStorgeUpdate() {
   localStorage.setItem("income-array", JSON.stringify(incomeArray));
   localStorage.setItem("expenses-array", JSON.stringify(expensesArray));
 }
-//jgjg

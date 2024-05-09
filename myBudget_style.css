@@ -96,7 +96,7 @@ i {
   text-align: start;
   padding-block: 30px;
 }
-.details-list{
+.details-list {
   width: 400px;
 }
 .list-header {
@@ -104,8 +104,6 @@ i {
   padding-bottom: 10px;
   font-weight: 100;
 }
-
-
 
 .list-item {
   border-bottom: solid lightgray 1px;
@@ -115,8 +113,6 @@ i {
   display: flex;
   justify-content: space-between;
   overflow: hidden;
-  
-  
 }
 
 .remove-container {
@@ -160,6 +156,6 @@ i {
   background-color: rgb(245, 240, 245);
 }
 
-.income-items > .list-item:nth-child(even){
+.income-items > .list-item:nth-child(even) {
   background-color: rgb(245, 240, 245);
 }
