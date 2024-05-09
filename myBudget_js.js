@@ -14,21 +14,20 @@ function colorChange(){
     //get the select value
     symbol = document.querySelector("select").value;
 
-    //set a variable with name of the class to add >> font color
-    const colorClass = symbol === "plus" ? "add-green" : "add-red";
+    //set a variable with name of the class to add >> outline color
+    const colorClass = symbol === "plus" ? "add-border-green" : "add-border-red";
+    
     // remove both classes from the elements
-    submitButtonElem.classList.remove("add-red", "add-green");
-    descriptionElem.classList.remove("add-red", "add-green");
-    valueElem.classList.remove("add-red", "add-green");
+    descriptionElem.classList.remove("add-border-red", "add-border-green");
+    valueElem.classList.remove("add-border-red", "add-border-green");
     // add class to the elements
-    submitButtonElem.classList.add(colorClass);
     descriptionElem.classList.add(colorClass);
     valueElem.classList.add(colorClass);
 
-    //set a variable with name of the class to add >> outline color
-    const checkMarkcolorClass = symbol === "plus" ? "add-border-green" : "add-border-red";
-    checkmarkElem.classList.remove("add-border-red", "add-border-green");
-    checkmarkElem.classList.add(checkMarkcolorClass);
+    //set a variable with name of the class to add >> font  color
+    const checkMarkcolorClass = symbol === "plus" ? "add-green" : "add-red";
+    submitButtonElem.classList.remove("add-red", "add-green");
+    submitButtonElem.classList.add(checkMarkcolorClass);
 }
 
 function addItemAction() {
@@ -65,12 +64,12 @@ function addIncomeItem(incomeArray, description, value) {
 
   elememtIncomeList.innerHTML += `<li class="list-item" value = "${incomeObject.index}">
         <span class="item-name">${description}</span>
-        <div class = "remove-container" > <span class="item-value add-green">+ ${value}</span>
-        <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
+        <div class = "remove-container" > <span class="item-value">${value}</span>
+        <button onclick="removeIncomeItem(this.parentNode.parentNode)" class = "remove-button">X</button></div>
         </li>`;
 }
 
-function addExpensesItem(expensesArray, description, value) {
+    function addExpensesItem(expensesArray, description, value) {
   const expensesObject = {
     description: description,
     value: value,
@@ -81,8 +80,8 @@ function addExpensesItem(expensesArray, description, value) {
 
   elementExpensesList.innerHTML += `<li class="list-item" value = "${expensesObject.index}">
         <span class="item-name">${description}</span>
-       <div class = "remove-container" > <span class="item-value add-red">- ${value}</span>
-        <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i>
+       <div class = "remove-container" > <span class="item-value">${value}</span>
+        <button onclick="removeExpensesItem(this.parentNode.parentNode)" class = "remove-button">X</button></div>
         </li>`;
 }
 
@@ -150,8 +149,8 @@ function loadArray() {
     for (let index in incomeArray) {
       elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
             <span class="item-name">${incomeArray[index].description}</span>
-            <div class = "remove-container"> <span class="item-value add-green">+ ${incomeArray[index].value}</span>
-            <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
+            <div class = "remove-container"> <span class="item-value">${incomeArray[index].value}</span>
+            <button onclick="removeIncomeItem(this.parentNode.parentNode)" class = "remove-button">X</button></div>
             </li>`;
     }
   }
@@ -160,8 +159,8 @@ function loadArray() {
     for (let index in expensesArray) {
       elementExpensesList.innerHTML += `<li class="list-item" value = "${index}">
             <span class="item-name">${expensesArray[index].description}</span>
-            <div class = "remove-container"> <span class="item-value add-red">- ${expensesArray[index].value}</span>
-            <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i></div>
+            <div class = "remove-container"> <span class="item-value">${expensesArray[index].value}</span>
+            <button onclick="removeExpensesItem(this.parentNode.parentNode)" class = "remove-button">X</button></div>
             </li>`;
     }
   }
