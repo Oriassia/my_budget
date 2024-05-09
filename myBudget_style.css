@@ -91,20 +91,21 @@ i {
 .details-section {
   display: flex;
   justify-content: center;
+  gap: 50px;
   gap: 90px;
   text-align: start;
   padding-block: 30px;
 }
-
+.details-list{
+  width: 400px;
+}
 .list-header {
   border-bottom: solid lightgray 1px;
   padding-bottom: 10px;
   font-weight: 100;
 }
 
-.details-list {
-  width: 250px;
-}
+
 
 .list-item {
   border-bottom: solid lightgray 1px;
@@ -114,6 +115,7 @@ i {
   display: flex;
   justify-content: space-between;
   overflow: hidden;
+  
   
 }
 
