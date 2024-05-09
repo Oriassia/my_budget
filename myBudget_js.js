@@ -65,12 +65,12 @@ function addIncomeItem(incomeArray, description, value) {
 
   elememtIncomeList.innerHTML += `<li class="list-item" value = "${incomeObject.index}">
         <span class="item-name">${description}</span>
-        <div class = "remove-container" > <span class="item-value">${value}</span>
-        <button onclick="removeIncomeItem(this.parentNode.parentNode)" class = "remove-button">X</button></div>
+        <div class = "remove-container" > <span class="item-value add-green">+ ${value}</span>
+        <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
         </li>`;
 }
 
-    function addExpensesItem(expensesArray, description, value) {
+function addExpensesItem(expensesArray, description, value) {
   const expensesObject = {
     description: description,
     value: value,
@@ -81,8 +81,8 @@ function addIncomeItem(incomeArray, description, value) {
 
   elementExpensesList.innerHTML += `<li class="list-item" value = "${expensesObject.index}">
         <span class="item-name">${description}</span>
-       <div class = "remove-container" > <span class="item-value">${value}</span>
-        <button onclick="removeExpensesItem(this.parentNode.parentNode)" class = "remove-button">X</button></div>
+       <div class = "remove-container" > <span class="item-value add-red">- ${value}</span>
+        <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i>
         </li>`;
 }
 
@@ -150,8 +150,8 @@ function loadArray() {
     for (let index in incomeArray) {
       elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
             <span class="item-name">${incomeArray[index].description}</span>
-            <div class = "remove-container"> <span class="item-value">${incomeArray[index].value}</span>
-            <button onclick="removeIncomeItem(this.parentNode.parentNode)" class = "remove-button">X</button></div>
+            <div class = "remove-container"> <span class="item-value add-green">+ ${incomeArray[index].value}</span>
+            <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
             </li>`;
     }
   }
@@ -160,8 +160,8 @@ function loadArray() {
     for (let index in expensesArray) {
       elementExpensesList.innerHTML += `<li class="list-item" value = "${index}">
             <span class="item-name">${expensesArray[index].description}</span>
-            <div class = "remove-container"> <span class="item-value">${expensesArray[index].value}</span>
-            <button onclick="removeExpensesItem(this.parentNode.parentNode)" class = "remove-button">X</button></div>
+            <div class = "remove-container"> <span class="item-value add-red">- ${expensesArray[index].value}</span>
+            <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i></div>
             </li>`;
     }
   }

@@ -62,7 +62,7 @@ body {
   align-items: center;
   gap: 30px;
   padding-block: 18px;
-  background-color: lightgray;
+  background-color: rgb(245, 240, 245);
 }
 
 select {
@@ -114,14 +114,20 @@ i {
   display: flex;
   justify-content: space-between;
   overflow: hidden;
+  
 }
 
 .remove-container {
   position: relative;
-  left: 23px;
+  left: 25px;
 }
 .list-item:hover .remove-container {
   left: 0px;
+  transition: 0.5s;
+}
+.remove-button {
+  font-size: 16px;
+  padding-left: 15px;
 }
 
 .percentage {
@@ -147,4 +153,11 @@ i {
 
 .add-border-red {
   outline-color: #f83d41;
+}
+.expenses-items > .list-item:nth-child(even) {
+  background-color: rgb(245, 240, 245);
+}
+
+.income-items > .list-item:nth-child(even){
+  background-color: rgb(245, 240, 245);
 }
