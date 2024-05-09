@@ -163,3 +163,4 @@ function loclStorgeUpdate() {
   localStorage.setItem("income-array", JSON.stringify(incomeArray));
   localStorage.setItem("expenses-array", JSON.stringify(expensesArray));
 }
+//jgjg
