@@ -119,6 +119,17 @@ input {
   list-style-type: none;
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
+}
+
+
+.remove-container{
+  position: relative;
+  left: 23px;
+}
+.list-item:hover .remove-container{
+  
+  left: 0px;
 }
 
 .percentage {
