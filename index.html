@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
     <link rel="stylesheet" href="myBudget_style.css" />
   </head>
   <body>
@@ -12,7 +16,7 @@
         <p class="page-headline" style="color: white">
           Available Budget in July 2019:
         </p>
-        <p class="total-sum">$ 0000.00</p>
+        <p class="total-sum"></p>
         <div class="balance-section">
           <div class="sum-container income">
             <span>INCOME</span>
@@ -28,53 +32,26 @@
       </div>
 
       <div class="input-section">
-        <div class="drop-down-menu">
-          <select id="drop-down-select">
-            <option value="plus">+</option>
-            <option value="minus">-</option>
-          </select>
-        </div>
+        <select id="drop-down-select">
+          <option value="plus">+</option>
+          <option value="minus">-</option>
+        </select>
         <input class="description" type="text" placeholder="Description" />
         <input class="value" type="number" placeholder="Value" />
-        <button class="submit-button" onclick="addItemAction()">
-          &#10003;
-        </button>
+        <i
+          class="fa-regular fa-circle-check submit-button"
+          onclick="addItemAction()"
+        ></i>
       </div>
 
       <div class="details-section">
         <div class="details-list">
           <h3 class="list-header" style="color: #38b2ad">INCOME</h3>
-          <ul class="income-items">
-            <li class="list-item">
-              <span class="item-name">Item 1</span>
-              <span class="item-value">$1000</span>
-            </li>
-            <li class="list-item">
-              <span class="item-name">Item 2</span>
-              <span class="item-value">$1000</span>
-            </li>
-            <li class="list-item">
-              <span class="item-name">Item 3</span>
-              <span class="item-value">$1000</span>
-            </li>
-          </ul>
+          <ul class="income-items"></ul>
         </div>
         <div class="details-list">
           <h3 class="list-header" style="color: #f83d41">EXPENSES</h3>
-          <ul class="expenses-items">
-            <li class="list-item">
-              <span class="item-name">Item 1</span>
-              <span class="item-value">$1000</span>
-            </li>
-            <li class="list-item">
-              <span class="item-name">Item 2</span>
-              <span class="item-value">$1000</span>
-            </li>
-            <li class="list-item">
-              <span class="item-name">Item 3</span>
-              <span class="item-value">$1000</span>
-            </li>
-          </ul>
+          <ul class="expenses-items"></ul>
         </div>
       </div>
     </div>
