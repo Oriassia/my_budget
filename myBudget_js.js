@@ -4,6 +4,33 @@ let expensesArray = getExpensesArray();
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
 loadArray();
+colorChange()
+
+function colorChange(){
+    let submitButtonElem = document.querySelector("i.submit-button")
+    let descriptionElem = document.querySelector("input.description")
+    let valueElem = document.querySelector("input.value")
+
+    //get the select value
+    symbol = document.querySelector("select").value;
+
+    //set a variable with name of the class to add >> font color
+    const colorClass = symbol === "plus" ? "add-green" : "add-red";
+    // remove both classes from the elements
+    submitButtonElem.classList.remove("add-red", "add-green");
+    descriptionElem.classList.remove("add-red", "add-green");
+    valueElem.classList.remove("add-red", "add-green");
+    // add class to the elements
+    submitButtonElem.classList.add(colorClass);
+    descriptionElem.classList.add(colorClass);
+    valueElem.classList.add(colorClass);
+
+    //set a variable with name of the class to add >> outline color
+    const checkMarkcolorClass = symbol === "plus" ? "add-border-green" : "add-border-red";
+    checkmarkElem.classList.remove("add-border-red", "add-border-green");
+    checkmarkElem.classList.add(checkMarkcolorClass);
+}
+
 function addItemAction() {
   const elementSelect = document.querySelector("select").value;
   const elementDescription = document.querySelector(".description").value;

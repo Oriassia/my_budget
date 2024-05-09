@@ -80,6 +80,14 @@ input {
   border: none;
 }
 
+i {
+  cursor: pointer;
+}
+
+.submit-button {
+  font-size: 25px;
+}
+
 .details-section {
   display: flex;
   justify-content: center;
@@ -129,6 +137,22 @@ input {
   background-color: crimson;
   padding: 4px;
   font-weight: 500;
+}
+
+.add-green {
+  color: #38b2ad;
+}
+
+.add-border-green {
+  outline-color: #38b2ad;
+}
+
+.add-red {
+  color: #f83d41;
+}
+
+.add-border-red {
+  outline-color: #f83d41;
 }
 .expenses-items > .list-item:nth-child(even) {
   background-color: rgb(245, 240, 245);
