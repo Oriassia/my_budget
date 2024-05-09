@@ -52,7 +52,6 @@ function addItemAction() {
   switch (elementSelect) {
     case "plus":
       addIncomeItem(incomeArray, elementDescription, elementValue);
-
       break;
     case "minus":
       addExpensesItem(expensesArray, elementDescription, elementValue);
