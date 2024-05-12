@@ -3,8 +3,30 @@ let expensesArray = getExpensesArray();
 
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
+const elementDate = document.querySelector(".date");
 loadArray();
+currentDate();
 colorChange();
+
+function currentDate() {
+  const month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  elementDate.innerHTML = ` Available Budget in ${new Date().getFullYear()} ${
+    month[new Date().getMonth()]
+  }`;
+}
 function colorChange() {
   let submitButtonElem = document.querySelector("i.submit-button");
   let descriptionElem = document.querySelector("input.description");
@@ -36,7 +58,8 @@ function addItemAction() {
   const pressedTime = new Date().getTime();
   if (
     elementDescription != "" &&
-    document.querySelector("input.value").value != ""
+    document.querySelector("input.value").value != "" &&
+    parseFloat(elementValue) >= 0
   ) {
     switch (elementSelect) {
       case "plus":
@@ -167,7 +190,7 @@ function getIncomeArray() {
 
 function getExpensesArray() {
   let stringExpensesArray = localStorage.getItem("expenses-array");
-
+  ``;
   if (stringExpensesArray) {
     return JSON.parse(stringExpensesArray);
   }
