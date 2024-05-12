@@ -41,7 +41,6 @@ function addItemAction() {
     switch (elementSelect) {
       case "plus":
         addIncomeItem(
-          incomeArray,
           elementDescription,
           elementValue,
           pressedTime
@@ -63,7 +62,7 @@ function addItemAction() {
   inputReset();
 }
 
-function addIncomeItem(incomeArray, description, value, pressedTime) {
+function addIncomeItem(description, value, pressedTime) {
   const incomeObject = {
     description: description,
     value: value,
@@ -109,6 +108,7 @@ function removeIncomeItem(item) {
   item.remove();
   updateBalanceSection();
 }
+
 function removeExpensesItem(item) {
   const itemTime = item.id;
 
@@ -126,6 +126,7 @@ function removeExpensesItem(item) {
 function updateBalanceSection() {
   let incomeSum = computeArraySum(incomeArray);
   let expensesSum = computeArraySum(expensesArray);
+  let precentageElem = document.querySelector(".percentage")
 
   document.querySelector(
     ".sum-container.income .value"
@@ -138,6 +139,13 @@ function updateBalanceSection() {
   document.querySelector(".total-sum").textContent = `$ ${
     incomeSum - expensesSum
   }`;
+
+    if (expensesArray.length > 0){
+      precentageElem.textContent = `%${(expensesSum/incomeSum) * 100}`; 
+    }
+    else{
+      precentageElem.textContent = `% 0`; 
+    }
 }
 
 function computeArraySum(array) {
@@ -169,7 +177,7 @@ function getExpensesArray() {
 function loadArray() {
   if (incomeArray.length > 0) {
     for (let index in incomeArray) {
-      elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
+      elememtIncomeList.innerHTML += `<li class="list-item" id = "${incomeArray[index].time}">
             <span class="item-name">${incomeArray[index].description}</span>
             <div class = "remove-container"> <span class="item-value add-green">+ ${incomeArray[index].value}</span>
             <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
@@ -179,7 +187,7 @@ function loadArray() {
 
   if (expensesArray.length > 0) {
     for (let index in expensesArray) {
-      elementExpensesList.innerHTML += `<li class="list-item" value = "${index}">
+      elementExpensesList.innerHTML += `<li class="list-item" id = "${expensesArray[index].time}">
             <span class="item-name">${expensesArray[index].description}</span>
             <div class = "remove-container"> <span class="item-value add-red">- ${expensesArray[index].value}</span>
             <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i></div>
