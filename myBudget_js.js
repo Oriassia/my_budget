@@ -3,8 +3,30 @@ let expensesArray = getExpensesArray();
 
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
+const elementDate = document.querySelector(".date");
 loadArray();
+currentDate();
 colorChange();
+
+function currentDate() {
+  const month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  elementDate.innerHTML = ` Available Budget in ${new Date().getFullYear()} ${
+    month[new Date().getMonth()]
+  }`;
+}
 function colorChange() {
   let submitButtonElem = document.querySelector("i.submit-button");
   let descriptionElem = document.querySelector("input.description");
@@ -36,7 +58,8 @@ function addItemAction() {
   const pressedTime = new Date().getTime();
   if (
     elementDescription != "" &&
-    document.querySelector("input.value").value != ""
+    document.querySelector("input.value").value != "" &&
+    parseFloat(elementValue) >= 0
   ) {
     switch (elementSelect) {
       case "plus":
@@ -159,7 +182,7 @@ function getIncomeArray() {
 
 function getExpensesArray() {
   let stringExpensesArray = localStorage.getItem("expenses-array");
-
+  ``;
   if (stringExpensesArray) {
     return JSON.parse(stringExpensesArray);
   }
@@ -169,7 +192,7 @@ function getExpensesArray() {
 function loadArray() {
   if (incomeArray.length > 0) {
     for (let index in incomeArray) {
-      elememtIncomeList.innerHTML += `<li class="list-item" value = "${index}">
+      elememtIncomeList.innerHTML += `<li class="list-item" id = "${incomeArray[index].time}">
             <span class="item-name">${incomeArray[index].description}</span>
             <div class = "remove-container"> <span class="item-value add-green">+ ${incomeArray[index].value}</span>
             <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
@@ -179,7 +202,7 @@ function loadArray() {
 
   if (expensesArray.length > 0) {
     for (let index in expensesArray) {
-      elementExpensesList.innerHTML += `<li class="list-item" value = "${index}">
+      elementExpensesList.innerHTML += `<li class="list-item" id = "${expensesArray[index].time}">
             <span class="item-name">${expensesArray[index].description}</span>
             <div class = "remove-container"> <span class="item-value add-red">- ${expensesArray[index].value}</span>
             <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i></div>

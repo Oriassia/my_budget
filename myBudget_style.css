@@ -32,6 +32,10 @@ body {
   color: white;
 }
 
+.sum-container .value{
+  color:  white;
+}
+
 .balance-section {
   display: flex;
   flex-direction: column;
