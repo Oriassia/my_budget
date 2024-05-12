@@ -167,3 +167,36 @@ i {
 .income-items > .list-item:nth-child(even) {
   background-color: rgb(245, 240, 245);
 }
+.select-description-container{
+  display: flex;
+ gap: 20px;
+}
+.submit-value-container{
+  display: flex;
+ gap: 20px;
+}
+.submit-button{
+  align-self: center;
+  margin: 6px;
+}
+.expenses .value{
+  margin-top: 3px;
+}
+@media only screen and (max-width: 600px){
+  .details-section{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+  .details-list {
+    width: 250px;
+  }
+.input-section{
+  flex-direction: column;
+}
+.select-description-container{
+  flex-direction: row-reverse;
+}
+}
