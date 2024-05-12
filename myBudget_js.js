@@ -4,9 +4,13 @@ let expensesArray = getExpensesArray();
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
 const elementDate = document.querySelector(".date");
+let descriptionElem = document.querySelector("input.description");
+let valueElem = document.querySelector("input.value");
 loadArray();
 currentDate();
 colorChange();
+addEnterAction(valueElem);
+addEnterAction(descriptionElem);
 
 function currentDate() {
   const month = [
@@ -29,9 +33,6 @@ function currentDate() {
 }
 function colorChange() {
   let submitButtonElem = document.querySelector("i.submit-button");
-  let descriptionElem = document.querySelector("input.description");
-  let valueElem = document.querySelector("input.value");
-
   //get the select value
   symbol = document.querySelector("select").value;
 
@@ -63,11 +64,7 @@ function addItemAction() {
   ) {
     switch (elementSelect) {
       case "plus":
-        addIncomeItem(
-          elementDescription,
-          elementValue,
-          pressedTime
-        );
+        addIncomeItem(elementDescription, elementValue, pressedTime);
 
         break;
       case "minus":
@@ -118,6 +115,19 @@ function addExpensesItem(expensesArray, description, value, pressedTime) {
         </li>`;
 }
 
+function addEnterAction(inputElemnt) {
+  // Execute a function when the user presses a key on the keyboard
+  inputElemnt.addEventListener("keypress", function (event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.querySelector(".submit-button").click();
+    }
+  });
+}
+
 function removeIncomeItem(item) {
   const itemTime = item.id;
 
@@ -149,8 +159,8 @@ function removeExpensesItem(item) {
 function updateBalanceSection() {
   let incomeSum = computeArraySum(incomeArray);
   let expensesSum = computeArraySum(expensesArray);
-  let precentageElem = document.querySelector(".percentage")
-
+  let precentageElem = document.querySelector(".percentage");
+  let precentageValue = (expensesSum / incomeSum) * 100;
   document.querySelector(
     ".sum-container.income .value"
   ).textContent = `+ $ ${incomeSum}`;
@@ -163,12 +173,11 @@ function updateBalanceSection() {
     incomeSum - expensesSum
   }`;
 
-    if (expensesArray.length > 0){
-      precentageElem.textContent = `%${(expensesSum/incomeSum) * 100}`; 
-    }
-    else{
-      precentageElem.textContent = `% 0`; 
-    }
+  if (expensesArray.length > 0) {
+    precentageElem.textContent = `%${precentageValue.toFixed(2)}`;
+  } else {
+    precentageElem.textContent = `% 0`;
+  }
 }
 
 function computeArraySum(array) {
