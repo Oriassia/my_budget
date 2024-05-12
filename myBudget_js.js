@@ -64,7 +64,6 @@ function addItemAction() {
     switch (elementSelect) {
       case "plus":
         addIncomeItem(
-          incomeArray,
           elementDescription,
           elementValue,
           pressedTime
@@ -86,7 +85,7 @@ function addItemAction() {
   inputReset();
 }
 
-function addIncomeItem(incomeArray, description, value, pressedTime) {
+function addIncomeItem(description, value, pressedTime) {
   const incomeObject = {
     description: description,
     value: value,
@@ -132,6 +131,7 @@ function removeIncomeItem(item) {
   item.remove();
   updateBalanceSection();
 }
+
 function removeExpensesItem(item) {
   const itemTime = item.id;
 
@@ -149,6 +149,7 @@ function removeExpensesItem(item) {
 function updateBalanceSection() {
   let incomeSum = computeArraySum(incomeArray);
   let expensesSum = computeArraySum(expensesArray);
+  let precentageElem = document.querySelector(".percentage")
 
   document.querySelector(
     ".sum-container.income .value"
@@ -161,6 +162,13 @@ function updateBalanceSection() {
   document.querySelector(".total-sum").textContent = `$ ${
     incomeSum - expensesSum
   }`;
+
+    if (expensesArray.length > 0){
+      precentageElem.textContent = `%${(expensesSum/incomeSum) * 100}`; 
+    }
+    else{
+      precentageElem.textContent = `% 0`; 
+    }
 }
 
 function computeArraySum(array) {
