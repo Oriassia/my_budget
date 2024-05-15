@@ -6,6 +6,7 @@ let elementExpensesList = document.querySelector(".expenses-items");
 const elementDate = document.querySelector(".date");
 let descriptionElem = document.querySelector("input.description");
 let valueElem = document.querySelector("input.value");
+
 loadArray();
 currentDate();
 colorChange();
@@ -200,9 +201,9 @@ function updateBalanceSection() {
     ".sum-container.expenses .value"
   ).textContent = `- $ ${expensesSum}`;
 
-  document.querySelector(".total-sum").textContent = `$ ${
+  document.querySelector(".total-sum").textContent = `$ ${(
     incomeSum - expensesSum
-  }`;
+  ).toLocaleString()}`;
 
   if (expensesArray.length > 0) {
     precentageElem.textContent = `%${precentageValue.toFixed(2)}`;
