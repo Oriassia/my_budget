@@ -14,6 +14,7 @@ addEnterAction(valueElem);
 addEnterAction(descriptionElem);
 
 function currentDate() {
+  //
   const month = [
     "January",
     "February",
@@ -119,7 +120,7 @@ function addIncomeItem(description, value, pressedTime) {
   elememtIncomeList.innerHTML += `<li class="list-item" id = "${pressedTime}">
         <span class="item-name">${description}</span>
         <div class = "remove-container" > 
-        <span class="item-value add-green">+ ${value}</span>
+        <span class="item-value add-green">+ ${value.toLocaleString()}</span>
         
         <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
         </li>`;
@@ -139,7 +140,7 @@ function addExpensesItem(expensesArray, description, value, pressedTime) {
   elementExpensesList.innerHTML += `<li class="list-item" id = "${pressedTime}">
         <span class="item-name">${description}</span>
        <div class = "remove-container" > 
-       <span class="item-value add-red">- ${value}</span>
+       <span class="item-value add-red">- ${value.toLocaleString()}</span>
        <span class="percentage">%${itemPrecentage}</span>
         <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i>
         </li>`;
@@ -195,11 +196,11 @@ function updateBalanceSection() {
   let precentageValue = (expensesSum / incomeSum) * 100;
   document.querySelector(
     ".sum-container.income .value"
-  ).textContent = `+ $ ${incomeSum}`;
+  ).textContent = `+ $ ${incomeSum.toLocaleString()}`;
 
   document.querySelector(
     ".sum-container.expenses .value"
-  ).textContent = `- $ ${expensesSum}`;
+  ).textContent = `- $ ${expensesSum.toLocaleString()}`;
 
   document.querySelector(".total-sum").textContent = `$ ${(
     incomeSum - expensesSum
@@ -241,9 +242,13 @@ function getExpensesArray() {
 function loadArray() {
   if (incomeArray.length > 0) {
     for (let index in incomeArray) {
-      elememtIncomeList.innerHTML += `<li class="list-item" id = "${incomeArray[index].time}">
+      elememtIncomeList.innerHTML += `<li class="list-item" id = "${
+        incomeArray[index].time
+      }">
             <span class="item-name">${incomeArray[index].description}</span>
-            <div class = "remove-container"> <span class="item-value add-green">+ ${incomeArray[index].value}</span>
+            <div class = "remove-container"> <span class="item-value add-green">+ ${incomeArray[
+              index
+            ].value.toLocaleString()}</span>
             <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
             </li>`;
     }
@@ -255,10 +260,14 @@ function loadArray() {
         (expensesArray[index].value / computeArraySum(incomeArray)) *
         100
       ).toFixed(2);
-      elementExpensesList.innerHTML += `<li class="list-item" id = "${expensesArray[index].time}">
+      elementExpensesList.innerHTML += `<li class="list-item" id = "${
+        expensesArray[index].time
+      }">
             <span class="item-name">${expensesArray[index].description}</span>
             <div class = "remove-container"> 
-            <span class="item-value add-red">- ${expensesArray[index].value}</span>
+            <span class="item-value add-red">- ${expensesArray[
+              index
+            ].value.toLocaleString()}</span>
             <span class="percentage">%${itemPrecentage}</span>
             <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i></div>
             </li>`;
