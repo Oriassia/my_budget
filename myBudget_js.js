@@ -77,11 +77,34 @@ function addItemAction() {
       default:
         break;
     }
-    updateBalanceSection();
   }
+  updateExpensesItemPrecentage();
+  updateBalanceSection();
   inputReset();
 }
 
+function updateExpensesItemPrecentage() {
+  let itemsList = elementExpensesList.querySelectorAll(".list-item");
+  let objValue;
+  for (let item of itemsList) {
+    for (let obj of expensesArray) {
+      if (item.id == obj.time) {
+        objValue = obj.value;
+        break;
+      }
+    }
+    let itemPrecentage;
+    if (computeArraySum(incomeArray) !== 0) {
+      itemPrecentage = (
+        (objValue / computeArraySum(incomeArray)) *
+        100
+      ).toFixed(2);
+    } else {
+      itemPrecentage = 0;
+    }
+    item.querySelector(".percentage").innerText = `%${itemPrecentage}`;
+  }
+}
 function addIncomeItem(description, value, pressedTime) {
   const incomeObject = {
     description: description,
@@ -94,7 +117,9 @@ function addIncomeItem(description, value, pressedTime) {
 
   elememtIncomeList.innerHTML += `<li class="list-item" id = "${pressedTime}">
         <span class="item-name">${description}</span>
-        <div class = "remove-container" > <span class="item-value add-green">+ ${value}</span>
+        <div class = "remove-container" > 
+        <span class="item-value add-green">+ ${value}</span>
+        
         <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
         </li>`;
 }
@@ -107,10 +132,14 @@ function addExpensesItem(expensesArray, description, value, pressedTime) {
   };
   expensesArray.push(expensesObject);
   loclStorgeUpdate();
-
+  let itemPrecentage = ((value / computeArraySum(incomeArray)) * 100).toFixed(
+    2
+  );
   elementExpensesList.innerHTML += `<li class="list-item" id = "${pressedTime}">
         <span class="item-name">${description}</span>
-       <div class = "remove-container" > <span class="item-value add-red">- ${value}</span>
+       <div class = "remove-container" > 
+       <span class="item-value add-red">- ${value}</span>
+       <span class="percentage">%${itemPrecentage}</span>
         <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i>
         </li>`;
 }
@@ -139,6 +168,7 @@ function removeIncomeItem(item) {
   }
   loclStorgeUpdate();
   item.remove();
+  updateExpensesItemPrecentage();
   updateBalanceSection();
 }
 
@@ -153,6 +183,7 @@ function removeExpensesItem(item) {
   }
   loclStorgeUpdate();
   item.remove();
+  updateExpensesItemPrecentage();
   updateBalanceSection();
 }
 
@@ -199,7 +230,7 @@ function getIncomeArray() {
 
 function getExpensesArray() {
   let stringExpensesArray = localStorage.getItem("expenses-array");
-  ``;
+
   if (stringExpensesArray) {
     return JSON.parse(stringExpensesArray);
   }
@@ -219,32 +250,25 @@ function loadArray() {
 
   if (expensesArray.length > 0) {
     for (let index in expensesArray) {
+      let itemPrecentage = (
+        (expensesArray[index].value / computeArraySum(incomeArray)) *
+        100
+      ).toFixed(2);
       elementExpensesList.innerHTML += `<li class="list-item" id = "${expensesArray[index].time}">
             <span class="item-name">${expensesArray[index].description}</span>
-            <div class = "remove-container"> <span class="item-value add-red">- ${expensesArray[index].value}</span>
+            <div class = "remove-container"> 
+            <span class="item-value add-red">- ${expensesArray[index].value}</span>
+            <span class="percentage">%${itemPrecentage}</span>
             <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i></div>
             </li>`;
     }
   }
+  updateExpensesItemPrecentage();
   updateBalanceSection();
 }
 function inputReset() {
   document.querySelector(".description").value = "";
   document.querySelector("input.value").value = "";
-}
-
-function localStorageValidation() {
-  if (incomeArray == undefined) {
-    incomeArray = [];
-  } else {
-    convertArrays(incomeArray);
-  }
-
-  if (expensesArray == undefined) {
-    expensesArray = [];
-  } else {
-    convertArrays(expensesArray);
-  }
 }
 
 function loclStorgeUpdate() {
