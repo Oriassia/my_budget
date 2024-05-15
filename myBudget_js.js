@@ -193,7 +193,13 @@ function updateBalanceSection() {
   let incomeSum = computeArraySum(incomeArray);
   let expensesSum = computeArraySum(expensesArray);
   let precentageElem = document.querySelector(".percentage");
-  let precentageValue = (expensesSum / incomeSum) * 100;
+
+  let precentageValue;
+  if (incomeSum !== 0) {
+    precentageValue = (expensesSum / incomeSum) * 100;
+  } else {
+    precentageValue = 0;
+  }
   document.querySelector(
     ".sum-container.income .value"
   ).textContent = `+ $ ${incomeSum.toLocaleString()}`;
