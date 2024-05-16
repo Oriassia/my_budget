@@ -1,11 +1,11 @@
-let incomeArray = getIncomeArray();
-let expensesArray = getExpensesArray();
+let incomeArray = getArray("income-array");
+let expensesArray = getArray("expenses-array");
 
 let elememtIncomeList = document.querySelector(".income-items");
 let elementExpensesList = document.querySelector(".expenses-items");
-const elementDate = document.querySelector(".date");
 let descriptionElem = document.querySelector("input.description");
 let valueElem = document.querySelector("input.value");
+const elementDate = document.querySelector(".date");
 
 loadArray();
 currentDate();
@@ -14,7 +14,6 @@ addEnterAction(valueElem);
 addEnterAction(descriptionElem);
 
 function currentDate() {
-  //
   const month = [
     "January",
     "February",
@@ -35,20 +34,12 @@ function currentDate() {
 }
 function colorChange() {
   let submitButtonElem = document.querySelector("i.submit-button");
-  //get the select value
   symbol = document.querySelector("select").value;
-
-  //set a variable with name of the class to add >> outline color
   const colorClass = symbol === "plus" ? "add-border-green" : "add-border-red";
-
-  // remove both classes from the elements
   descriptionElem.classList.remove("add-border-red", "add-border-green");
   valueElem.classList.remove("add-border-red", "add-border-green");
-  // add class to the elements
   descriptionElem.classList.add(colorClass);
   valueElem.classList.add(colorClass);
-
-  //set a variable with name of the class to add >> font  color
   const checkMarkcolorClass = symbol === "plus" ? "add-green" : "add-red";
   submitButtonElem.classList.remove("add-red", "add-green");
   submitButtonElem.classList.add(checkMarkcolorClass);
@@ -66,16 +57,10 @@ function addItemAction() {
   ) {
     switch (elementSelect) {
       case "plus":
-        addIncomeItem(elementDescription, elementValue, pressedTime);
-
+        addItem(elementDescription, elementValue, pressedTime, elementSelect);
         break;
       case "minus":
-        addExpensesItem(
-          expensesArray,
-          elementDescription,
-          elementValue,
-          pressedTime
-        );
+        addItem(elementDescription, elementValue, pressedTime, elementSelect);
       default:
         break;
     }
@@ -107,53 +92,48 @@ function updateExpensesItemPrecentage() {
     item.querySelector(".percentage").innerText = `%${itemPrecentage}`;
   }
 }
-function addIncomeItem(description, value, pressedTime) {
-  const incomeObject = {
+function addItem(description, value, pressedTime, operator) {
+  const Object = {
     description: description,
     value: value,
     time: pressedTime,
   };
 
-  incomeArray.push(incomeObject);
-  loclStorgeUpdate();
-
-  elememtIncomeList.innerHTML += `<li class="list-item" id = "${pressedTime}">
+  switch (operator) {
+    case "plus":
+      incomeArray.push(Object);
+      elememtIncomeList.innerHTML += `<li class="list-item" id = "${pressedTime}">
         <span class="item-name">${description}</span>
         <div class = "remove-container" > 
         <span class="item-value add-green">+ ${value.toLocaleString()}</span>
         
         <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
         </li>`;
-}
-
-function addExpensesItem(expensesArray, description, value, pressedTime) {
-  const expensesObject = {
-    description: description,
-    value: value,
-    time: pressedTime,
-  };
-  expensesArray.push(expensesObject);
-  loclStorgeUpdate();
-  let itemPrecentage = ((value / computeArraySum(incomeArray)) * 100).toFixed(
-    2
-  );
-  elementExpensesList.innerHTML += `<li class="list-item" id = "${pressedTime}">
+      break;
+    case "minus":
+      expensesArray.push(Object);
+      let itemPrecentage = (
+        (value / computeArraySum(incomeArray)) *
+        100
+      ).toFixed(2);
+      elementExpensesList.innerHTML += `<li class="list-item" id = "${pressedTime}">
         <span class="item-name">${description}</span>
        <div class = "remove-container" > 
        <span class="item-value add-red">- ${value.toLocaleString()}</span>
        <span class="percentage">%${itemPrecentage}</span>
         <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i>
         </li>`;
+    default:
+      break;
+  }
+  loclStorgeUpdate();
 }
 
 function addEnterAction(inputElemnt) {
-  // Execute a function when the user presses a key on the keyboard
   inputElemnt.addEventListener("keypress", function (event) {
-    // If the user presses the "Enter" key on the keyboard
     if (event.key === "Enter") {
-      // Cancel the default action, if needed
       event.preventDefault();
-      // Trigger the button element with a click
+
       document.querySelector(".submit-button").click();
     }
   });
@@ -227,67 +207,7 @@ function computeArraySum(array) {
   return sum;
 }
 
-function getIncomeArray() {
-  let stringIncomeArray = localStorage.getItem("income-array");
-
-  if (stringIncomeArray) {
-    return JSON.parse(stringIncomeArray);
-  }
-  return [];
-}
-
-function getExpensesArray() {
-  let stringExpensesArray = localStorage.getItem("expenses-array");
-
-  if (stringExpensesArray) {
-    return JSON.parse(stringExpensesArray);
-  }
-  return [];
-}
-
-function loadArray() {
-  if (incomeArray.length > 0) {
-    for (let index in incomeArray) {
-      elememtIncomeList.innerHTML += `<li class="list-item" id = "${
-        incomeArray[index].time
-      }">
-            <span class="item-name">${incomeArray[index].description}</span>
-            <div class = "remove-container"> <span class="item-value add-green">+ ${incomeArray[
-              index
-            ].value.toLocaleString()}</span>
-            <i onclick="removeIncomeItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-green"></i>
-            </li>`;
-    }
-  }
-
-  if (expensesArray.length > 0) {
-    for (let index in expensesArray) {
-      let itemPrecentage = (
-        (expensesArray[index].value / computeArraySum(incomeArray)) *
-        100
-      ).toFixed(2);
-      elementExpensesList.innerHTML += `<li class="list-item" id = "${
-        expensesArray[index].time
-      }">
-            <span class="item-name">${expensesArray[index].description}</span>
-            <div class = "remove-container"> 
-            <span class="item-value add-red">- ${expensesArray[
-              index
-            ].value.toLocaleString()}</span>
-            <span class="percentage">%${itemPrecentage}</span>
-            <i onclick="removeExpensesItem(this.parentNode.parentNode)" class="fa-regular fa-circle-xmark remove-button add-red"></i></div>
-            </li>`;
-    }
-  }
-  updateExpensesItemPrecentage();
-  updateBalanceSection();
-}
 function inputReset() {
   document.querySelector(".description").value = "";
   document.querySelector("input.value").value = "";
-}
-
-function loclStorgeUpdate() {
-  localStorage.setItem("income-array", JSON.stringify(incomeArray));
-  localStorage.setItem("expenses-array", JSON.stringify(expensesArray));
 }
