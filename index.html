@@ -13,7 +13,7 @@
   <body>
     <div class="page-wrapper">
       <div class="header-section">
-        <p class="date" style="color: white"></p>
+        <p class="date" style="color: white">Available Budget in July 2019:</p>
         <p class="total-sum"></p>
         <div class="balance-section">
           <div class="sum-container income">
@@ -31,16 +31,20 @@
       </div>
 
       <div class="input-section">
-        <select onchange="colorChange()">
-          <option value="plus">+</option>
-          <option value="minus">-</option>
-        </select>
-        <input class="description" type="text" placeholder="Description" />
-        <input class="value" type="number" placeholder="Value" />
-        <i
-          class="fa-regular fa-circle-check submit-button"
-          onclick="addItemAction()"
-        ></i>
+        <div class="select-description-container">
+          <select onchange="colorChange()">
+            <option value="plus">+</option>
+            <option value="minus">-</option>
+          </select>
+          <input class="description" type="text" placeholder="Description" />
+        </div>
+        <div class="submit-value-container">
+          <input class="value" type="number" placeholder="Value" />
+          <i
+            class="fa-regular fa-circle-check submit-button"
+            onclick="addItemAction()"
+          ></i>
+        </div>
       </div>
 
       <div class="details-section">

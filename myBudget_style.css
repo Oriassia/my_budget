@@ -32,8 +32,8 @@ body {
   color: white;
 }
 
-.sum-container .value{
-  color:  white;
+.sum-container .value {
+  color: white;
 }
 
 .balance-section {
@@ -86,6 +86,9 @@ input {
   padding-block: 10px;
   border-radius: 4px;
   border: none;
+}
+.description {
+  width: 350px;
 }
 
 i {
@@ -166,4 +169,45 @@ i {
 
 .income-items > .list-item:nth-child(even) {
   background-color: rgb(245, 240, 245);
+}
+.select-description-container {
+  display: flex;
+  gap: 20px;
+}
+.submit-value-container {
+  display: flex;
+  gap: 20px;
+}
+.submit-button {
+  align-self: center;
+  margin: 6px;
+}
+.expenses .value {
+  margin-top: 3px;
+}
+@media only screen and (max-width: 1000px){
+  .input-section,.details-section{
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 660px) {
+  .details-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+  .details-list {
+    width: 250px;
+  }
+  .input-section {
+    flex-direction: column;
+  }
+  input.description,input.value{
+    width: 200px;
+  }
+  
+  .select-description-container {
+    flex-direction: row-reverse;
+  }
 }
