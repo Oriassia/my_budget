@@ -26,6 +26,14 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.fa-moon,.fa-sun {
+  position: absolute;
+  margin: 16px;
+  padding: 5px;
+  border: 2px solid black;
+  border-radius: 7px;
+  
+}
 
 .total-sum {
   font-size: 40px;
@@ -185,8 +193,28 @@ i {
 .expenses .value {
   margin-top: 3px;
 }
-@media only screen and (max-width: 1000px){
-  .input-section,.details-section{
+
+body.dark-mode,
+.input-section.dark-mode {
+  background-color: rgb(18, 18, 18);
+}
+.dark-mode.details-section,
+input.dark-mode,
+select.dark-mode {
+  background-color: rgb(41, 41, 41);
+  color: white;
+}
+
+.expenses-items.dark-mode > .list-item:nth-child(even) {
+  background-color: rgb(18, 18, 18);
+}
+
+.income-items.dark-mode > .list-item:nth-child(even) {
+  background-color: rgb(18, 18, 18);
+}
+@media only screen and (max-width: 1000px) {
+  .input-section,
+  .details-section {
     padding: 20px;
   }
 }
@@ -203,10 +231,11 @@ i {
   .input-section {
     flex-direction: column;
   }
-  input.description,input.value{
+  input.description,
+  input.value {
     width: 200px;
   }
-  
+
   .select-description-container {
     flex-direction: row-reverse;
   }
