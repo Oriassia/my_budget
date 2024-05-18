@@ -7,11 +7,15 @@ let descriptionElem = document.querySelector("input.description");
 let valueElem = document.querySelector("input.value");
 const elementDate = document.querySelector(".date");
 
-loadArray();
-currentDate();
-colorChange();
-addEnterAction(valueElem);
-addEnterAction(descriptionElem);
+reloadPage()
+function reloadPage() {
+  loadArray();
+  darkModeReload();
+  currentDate();
+  colorChange();
+  addEnterAction(valueElem);
+  addEnterAction(descriptionElem);
+}
 
 function currentDate() {
   const month = [
