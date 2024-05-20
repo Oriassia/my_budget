@@ -7,7 +7,7 @@ let descriptionElem = document.querySelector("input.description");
 let valueElem = document.querySelector("input.value");
 const elementDate = document.querySelector(".date");
 
-reloadPage()
+reloadPage();
 function reloadPage() {
   loadArray();
   darkModeReload();
@@ -53,7 +53,7 @@ function addItemAction() {
   const elementSelect = document.querySelector("select").value;
   const elementDescription = document.querySelector(".description").value;
   const elementValue = document.querySelector("input.value").valueAsNumber;
-  const pressedTime = new Date().getTime();
+
   if (
     elementDescription != "" &&
     document.querySelector("input.value").value != "" &&
@@ -61,10 +61,10 @@ function addItemAction() {
   ) {
     switch (elementSelect) {
       case "plus":
-        addItem(elementDescription, elementValue, pressedTime, elementSelect);
+        addItem(elementDescription, elementValue, elementSelect);
         break;
       case "minus":
-        addItem(elementDescription, elementValue, pressedTime, elementSelect);
+        addItem(elementDescription, elementValue, elementSelect);
       default:
         break;
     }
@@ -78,12 +78,8 @@ function updateExpensesItemPrecentage() {
   let itemsList = elementExpensesList.querySelectorAll(".list-item");
   let objValue;
   for (let item of itemsList) {
-    for (let obj of expensesArray) {
-      if (item.id == obj.time) {
-        objValue = obj.value;
-        break;
-      }
-    }
+    const index = Array.from(elementExpensesList.children).indexOf(item);
+    objValue = expensesArray[index].value;
     let itemPrecentage;
     if (computeArraySum(incomeArray) !== 0) {
       itemPrecentage = (
@@ -96,17 +92,16 @@ function updateExpensesItemPrecentage() {
     item.querySelector(".percentage").innerText = `%${itemPrecentage}`;
   }
 }
-function addItem(description, value, pressedTime, operator) {
+function addItem(description, value, operator) {
   const Object = {
     description: description,
     value: value,
-    time: pressedTime,
   };
 
   switch (operator) {
     case "plus":
       incomeArray.push(Object);
-      elememtIncomeList.innerHTML += `<li class="list-item" id = "${pressedTime}">
+      elememtIncomeList.innerHTML += `<li class="list-item" ">
         <span class="item-name">${description}</span>
         <div class = "remove-container" > 
         <span class="item-value add-green">+ ${value.toLocaleString()}</span>
@@ -120,7 +115,7 @@ function addItem(description, value, pressedTime, operator) {
         (value / computeArraySum(incomeArray)) *
         100
       ).toFixed(2);
-      elementExpensesList.innerHTML += `<li class="list-item" id = "${pressedTime}">
+      elementExpensesList.innerHTML += `<li class="list-item" >
         <span class="item-name">${description}</span>
        <div class = "remove-container" > 
        <span class="item-value add-red">- ${value.toLocaleString()}</span>
@@ -144,14 +139,9 @@ function addEnterAction(inputElemnt) {
 }
 
 function removeIncomeItem(item) {
-  const itemTime = item.id;
+  const index = Array.from(elememtIncomeList.children).indexOf(item);
+  incomeArray.splice(index, 1);
 
-  for (let index in incomeArray) {
-    if (itemTime == incomeArray[index].time) {
-      incomeArray.splice(index, 1);
-      break;
-    }
-  }
   loclStorgeUpdate();
   item.remove();
   updateExpensesItemPrecentage();
@@ -159,14 +149,9 @@ function removeIncomeItem(item) {
 }
 
 function removeExpensesItem(item) {
-  const itemTime = item.id;
+  const index = Array.from(elementExpensesList.children).indexOf(item);
+  expensesArray.splice(index, 1);
 
-  for (let index in expensesArray) {
-    if (itemTime == expensesArray[index].time) {
-      expensesArray.splice(index, 1);
-      break;
-    }
-  }
   loclStorgeUpdate();
   item.remove();
   updateExpensesItemPrecentage();
